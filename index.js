@@ -7,7 +7,6 @@ module.exports = function(source) {
   var chimport = /chimport +([\'\"])(.*?)\1\s*?;/gm;
   var resourceDir = path.dirname(this.resourcePath);
   function replacer(match, quote, filename) {
-    if (!glob.hasMagic(filename)) return match;
     var result = glob
       .sync(filename, {
         cwd: resourceDir
