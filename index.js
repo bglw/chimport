@@ -12,8 +12,16 @@ module.exports = function(source) {
         cwd: resourceDir
       })
       .map(function(file, index) {
-        const fullFile = path.resolve(resourceDir, file);
-        return fs.readFileSync(fullFile);
+        const dirname = path.dirname(file);
+        const fullFilePath = path.resolve(resourceDir, file);
+        let fullFileContent = fs.readFileSync(fullFilePath).toString();
+
+        fullFileContent = rewriteImports(fullFileContent, dirname);
+        fullFileContent = rewriteRequires(fullFileContent, dirname);
+
+        console.log(fullFileContent);
+
+        return fullFileContent;
       })
       .join('\n\n');
     return result;
@@ -21,3 +29,23 @@ module.exports = function(source) {
   var res = source.replace(chimport, replacer);
   return res;
 };
+
+const rewriteImports = (src, dirname) => {
+  var importRegex = /import +([\'\"])(.*?)\1/gm;
+
+  function replacer(match, quote, filename) {
+    return `import '${dirname}/${filename}'`;
+  }
+
+  return src.replace(importRegex, replacer);
+}
+
+const rewriteRequires = (src, dirname) => {
+  var requireRegex = /require\(([\'\"])(.*?)\1\)/gm;
+
+  function replacer(match, quote, filename) {
+    return `require('${dirname}/${filename}')`;
+  }
+
+  return src.replace(requireRegex, replacer);
+}

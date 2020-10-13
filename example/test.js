@@ -1,4 +1,5 @@
-chimport './foo/**/*.js';
-chimport './foo/**/test.js';
+chimport './foo/1.js';
 
-chimport './foo/**/*.scss';
+chimport './foo/bar/**/*.js';
+
+chimport './hi.js';
