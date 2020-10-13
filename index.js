@@ -29,7 +29,7 @@ module.exports = function(source) {
 };
 
 const rewriteImports = (src, dirname) => {
-  var importRegex = /import +([\'\"])(.*?)\1/gm;
+  var importRegex = /import +([\'\"])(\..*?)\1/gm;
 
   function replacer(match, quote, filename) {
     return `import '${dirname}/${filename}'`;
@@ -39,7 +39,7 @@ const rewriteImports = (src, dirname) => {
 }
 
 const rewriteRequires = (src, dirname) => {
-  var requireRegex = /require\(([\'\"])([^\+\$\'\"]*?)\1\)/gm;
+  var requireRegex = /require\(([\'\"])(\.[^\+\$\'\"]*?)\1\)/gm;
 
   function replacer(match, quote, filename) {
     return `require('${dirname}/${filename}')`;
