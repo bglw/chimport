@@ -19,8 +19,6 @@ module.exports = function(source) {
         fullFileContent = rewriteImports(fullFileContent, dirname);
         fullFileContent = rewriteRequires(fullFileContent, dirname);
 
-        console.log(fullFileContent);
-
         return fullFileContent;
       })
       .join('\n\n');
@@ -41,7 +39,7 @@ const rewriteImports = (src, dirname) => {
 }
 
 const rewriteRequires = (src, dirname) => {
-  var requireRegex = /require\(([\'\"])(.*?)\1\)/gm;
+  var requireRegex = /require\(([\'\"])([^\+\$\'\"]*?)\1\)/gm;
 
   function replacer(match, quote, filename) {
     return `require('${dirname}/${filename}')`;
