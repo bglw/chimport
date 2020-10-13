@@ -1,6 +1,6 @@
 {
   "name": "chimport",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Chimport - just cats files in. Very dumb.",
   "license": "MIT",
   "main": "index.js",
